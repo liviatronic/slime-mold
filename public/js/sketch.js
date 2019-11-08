@@ -4,25 +4,16 @@ var temp;
 var humidityStatus;
 var tempStatus;
 var totalStatus;
+var actStatus;
 
 function preload() {
     // p5 specific function to load JSON
-    weatherData = loadJSON('https://api.openweathermap.org/data/2.5/forecast?id=5128581&APPID=417941f8eb6ef816314244950431636b');
+    weatherData = loadJSON('https://api.openweathermap.org/data/2.5/forecast?id=5128581&units=imperial&APPID=417941f8eb6ef816314244950431636b');
 }
 
 function setup() {
-    var canvas = createCanvas(windowWidth, windowHeight);
-    canvas.parent("drawingCanvas");
-
-    background('black');
-    textSize(32);
-    fill('white');
-
-    console.log(weatherData);
     humidity = weatherData.list[0].main.humidity;
-    console.log(humidity);
     temp = weatherData.list[0].main.temp;
-    console.log(temp);
 
     // set humidityStatus
     if (humidity >= 40 && humidity <= 60) {
@@ -37,46 +28,70 @@ function setup() {
         humidityStatus = 'red';
     }
 
-    console.log(humidityStatus);
-
-    fill(humidityStatus);
-    text("Humidity is " + humidity, 50, 50);
-
     // set tempStatus
-    if (temp >= 294.2 && temp <= 296.4) {
+    if (temp >= 70 && temp <= 74) {
         tempStatus = 'green';
-    } else if (temp < 294.2 && temp >= 291.4) {
+    } else if (temp < 70 && temp >= 68) {
         tempStatus = 'yellow';
-    } else if (temp < 296.4 && temp >= 298.4) {
+    } else if (temp < 74 && temp >= 76) {
         tempStatus = 'yellow';
-    } else if (temp < 291.4) {
+    } else if (temp < 68) {
         tempStatus = 'red';
-    } else if (temp > 298.4) {
+    } else if (temp > 76) {
         tempStatus = 'red';
     }
-
-    fill(tempStatus);
-    text("Temperature is " + temp + ' kelvins', 50, 90);
 
     // tell mold what to do
+
+    // look for food
     if (tempStatus == 'green' && humidityStatus == 'green') {
-        fill('green');
-        text("Look for food", width / 2, height / 2);
-    } else if (tempStatus == 'yellow' && humidityStatus == 'yellow') {
-        fill('yellow');
-        text("Reproduce", width / 2, height / 2);
-    } else if (tempStatus == 'red' && humidityStatus == 'red') {
-        fill('red');
-        text("Go to sleep", width / 2, height / 2);
+        $('.overlay #status').css("color", "green");
+        $('.overlay #status').text("Look for food");
+        $('.video2').show();
+
     }
-}
 
-function draw() {
+    // reproduce
+    else if (tempStatus == 'green' && humidityStatus == 'yellow') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'yellow' && humidityStatus == 'green') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'green' && humidityStatus == 'red') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'red' && humidityStatus == 'green') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'yellow' && humidityStatus == 'yellow') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'yellow' && humidityStatus == 'red') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    } else if (tempStatus == 'red' && humidityStatus == 'yellow') {
+        $('.overlay #status').css("color", "yellow");
+        $('.overlay #status').text("Reproduce");
+        $('.video3').show();
+    }
 
-}
+    // go to sleep
+    else if (tempStatus == 'red' && humidityStatus == 'red') {
+        $('.overlay #status').css("color", "red");
+        $('.overlay #status').text("Go to sleep");
+        $('.video1').show();
+    }
 
+    $('.overlay #humidity').css("color", humidityStatus);
+    $('.overlay #humidity').text("Humidity is " + humidity);
+    $('.overlay #temp').css("color", tempStatus);
+    $('.overlay #temp').text("Temperature is " + temp + '°F');
 
-// function to resize the p5 canvas when the window is resized
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
 }

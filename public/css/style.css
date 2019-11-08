@@ -135,3 +135,64 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+/* CSS */
+@font-face {
+    font-family: "Clifton";
+    src: url("/resources/fonts/CliftonTrial-Italic.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Favorit";
+    src: url("/resources/fonts/FavoritLiningTrial-Light.woff") format("woff");
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.overlay .video1,
+.overlay .video2,
+.overlay .video3 {
+    display: none;
+    z-index: 100;
+    position: fixed;
+    mix-blend-mode: color-dodge;
+}
+
+#stats {
+    width: 100vw;
+    height: 95vh;
+    padding: 24px;
+}
+
+#status {
+    position: absolute;
+    width: 100vw;
+    text-align: center;
+    padding: 24px;
+    color: red;
+    /* z-index: 999; */
+    display: block;
+    font-size: 10vw;
+    font-family: "Clifton";
+}
+
+ul li {
+    color: white;
+    display: block;
+    font-size: 3vw;
+    font-family: "Favorit";
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
